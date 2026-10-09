@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Management System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- AUTHENTICATION -->
+  <section id="authPage" class="auth-page">
+    <div class="auth-card">
+      <div class="brand">
+        <div class="brand-icon">✓</div>
+        <div>
+          <h1>Task Management</h1>
+          <p>SDC Project</p>
+        </div>
+      </div>
+
+      <div class="auth-tabs">
+        <button id="loginTab" class="tab active" onclick="showAuth('login')">Login</button>
+        <button id="signupTab" class="tab" onclick="showAuth('signup')">Sign Up</button>
+      </div>
+
+      <form id="loginForm" class="auth-form" onsubmit="login(event)">
+        <label>Email / Username</label>
+        <input id="loginUsername" type="text" placeholder="Enter username" required>
+        <label>Password</label>
+        <input id="loginPassword" type="password" placeholder="Enter password" required>
+        <button class="primary-btn" type="submit">Login</button>
+        <p class="hint">Demo Admin: <b>admin</b> / <b>admin123</b></p>
+        <p class="hint">Demo User: <b>user</b> / <b>user123</b></p>
+      </form>
+
+      <form id="signupForm" class="auth-form hidden" onsubmit="signup(event)">
+        <label>Full Name</label>
+        <input id="signupName" type="text" placeholder="Enter full name" required>
+        <label>Username</label>
+        <input id="signupUsername" type="text" placeholder="Choose username" required>
+        <label>Password</label>
+        <input id="signupPassword" type="password" minlength="6" placeholder="Minimum 6 characters" required>
+        <label>Role</label>
+        <select id="signupRole">
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+        <button class="primary-btn" type="submit">Create Account</button>
+      </form>
+
+      <div id="authMessage" class="message"></div>
+    </div>
+  </section>
+
+  <!-- APPLICATION -->
+  <section id="appPage" class="app-page hidden">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon small">✓</div>
+        <span>Task Management</span>
+      </div>
+
+      <nav id="adminNav" class="nav hidden">
+        <button class="nav-item active" data-module="adminDashboard" onclick="navigate('adminDashboard')">🏠 Dashboard</button>
+        <button class="nav-item" data-module="manageUsers" onclick="navigate('manageUsers')">👥 Users</button>
+        <button class="nav-item" data-module="manageTasks" onclick="navigate('manageTasks')">📋 All Tasks</button>
+      </nav>
+
+      <nav id="userNav" class="nav hidden">
+        <button class="nav-item active" data-module="userDashboard" onclick="navigate('userDashboard')">🏠 Dashboard</button>
+        <button class="nav-item" data-module="myTasks" onclick="navigate('myTasks')">📋 My Tasks</button>
+        <button class="nav-item" data-module="createTask" onclick="navigate('createTask')">➕ Add Task</button>
+      </nav>
+
+      <button class="nav-item logout" onclick="logout()">🚪 Logout</button>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <h2 id="pageTitle">Dashboard</h2>
+          <p id="pageSubtitle">Welcome to Task Management</p>
+        </div>
+        <div class="profile">
+          <span id="roleBadge" class="role-badge">USER</span>
+          <span id="currentUser">User</span>
+        </div>
+      </header>
+
+      <div id="moduleContent"></div>
+    </main>
+  </section>
+
+  <!-- TASK MODAL -->
+  <div id="taskModal" class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modalTitle">Add Task</h3>
+        <button class="icon-btn" onclick="closeTaskModal()">×</button>
+      </div>
+      <form onsubmit="saveTask(event)">
+        <input id="editTaskId" type="hidden">
+        <label>Task Title</label>
+        <input id="taskTitle" type="text" placeholder="Enter task title" required>
+        <label>Description</label>
+        <textarea id="taskDescription" rows="4" placeholder="Enter task description" required></textarea>
+        <div class="form-grid">
+          <div>
+            <label>Priority</label>
+            <select id="taskPriority">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+          <div>
+            <label>Deadline</label>
+            <input id="taskDeadline" type="date" required>
+          </div>
+        </div>
+        <div id="assignField">
+          <label>Assign To</label>
+          <select id="taskAssignee"></select>
+        </div>
+        <label>Status</label>
+        <select id="taskStatus">
+          <option value="todo">To Do</option>
+          <option value="inprogress">In Progress</option>
+          <option value="completed">Completed</option>
+        </select>
+        <div class="modal-actions">
+          <button type="button" class="secondary-btn" onclick="closeTaskModal()">Cancel</button>
+          <button type="submit" class="primary-btn">Save Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
